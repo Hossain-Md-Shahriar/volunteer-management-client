@@ -39,7 +39,11 @@ const Navbar = () => {
     <div className="navbar bg-base-100 justify-between dark:bg-black">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost lg:hidden p-0"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -64,11 +68,41 @@ const Navbar = () => {
         </div>
         <a className="btn btn-ghost text-xl">Volunteer</a>
       </div>
-      <div className="flex gap-6">
+      <div className="flex justify-end">
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end flex items-center gap-3 mr-2">
+          <div className="dropdown dropdown-end">
+            <button tabIndex={0} className="sm:w-20 text-sm">
+              My Profile
+            </button>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <NavLink
+                  to="/add-volunteer-post"
+                  className={({ isActive }) =>
+                    `${isActive ? "border-2" : "border-0"}`
+                  }
+                >
+                  Add Volunteer Post
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/manage-my-post"
+                  className={({ isActive }) =>
+                    `${isActive ? "border-2" : "border-0"}`
+                  }
+                >
+                  Manage My Post
+                </NavLink>
+              </li>
+            </ul>
+          </div>
           {user ? (
             <div className="flex gap-3 items-center">
               <div
@@ -76,8 +110,8 @@ const Navbar = () => {
                 id="clickable"
               >
                 <img
-                  referrerPolicy='no-referrer'
-                  alt='User Profile Photo'
+                  referrerPolicy="no-referrer"
+                  alt="User Profile Photo"
                   src={user?.photoURL}
                 />
               </div>
@@ -104,9 +138,7 @@ const Navbar = () => {
             <>
               <NavLink
                 className={({ isActive }) =>
-                  `p-2 rounded-md ${
-                    isActive ? "border-2" : "border-0"
-                  }`
+                  `p-2 rounded-md ${isActive ? "border-2" : "border-0"}`
                 }
                 to="/login"
               >
