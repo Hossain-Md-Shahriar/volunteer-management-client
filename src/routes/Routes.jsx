@@ -7,11 +7,17 @@ import NeedVolunteer from "../pages/NeedVolunteer";
 import AddVolunteerPost from "../pages/AddVolunteerPost";
 import ManageMyPost from "../pages/ManageMyPost";
 import PrivateRoute from "./PrivateRoute";
+import ScrollToTop from "../components/ScrollToTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Main />
+      </>
+    ),
     children: [
       {
         index: true,

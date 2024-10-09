@@ -66,7 +66,7 @@ const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Volunteer</a>
+        <Link to="/" className="btn btn-ghost text-xl">Volunteer</Link>
       </div>
       <div className="flex justify-end">
         <div className="navbar-center hidden lg:flex">
@@ -122,13 +122,15 @@ const Navbar = () => {
                   borderRadius: "8px",
                   display: "flex",
                   flexDirection: "column",
+                  alignItems: "center",
                   gap: "10px",
+                  padding: "10px",
                 }}
               >
-                <p className="font-medium text-base">{user.displayName}</p>
+                <p className="font-medium text-sm">{user.displayName}</p>
                 <button
                   onClick={logOut}
-                  className="btn mb-2 bg-[#4793AF] text-white border-none text-base hover:bg-[#32697c]"
+                  className="btn bg-[#4793AF] text-white border-none text-sm hover:bg-[#32697c]"
                 >
                   Log out
                 </button>

@@ -2,11 +2,17 @@ import google from "../assets/google.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 const Register = () => {
-  const { updateUserProfile, createUser, setUser } = useAuth();
+  const { updateUserProfile, createUser, user, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
   const from = location.state || "/";
 
   const handleRegister = async (e) => {
