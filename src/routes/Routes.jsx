@@ -8,6 +8,7 @@ import AddVolunteerPost from "../pages/AddVolunteerPost";
 import ManageMyPost from "../pages/ManageMyPost";
 import PrivateRoute from "./PrivateRoute";
 import ScrollToTop from "../components/ScrollToTop";
+import PostDetails from "../components/PostDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,18 @@ const router = createBrowserRouter([
             <ManageMyPost />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/need-volunteer/:id",
+        element: (
+          <PrivateRoute>
+            <PostDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_API_URL}/all-need-volunteer/${params.id}`
+          ),
       },
     ],
   },

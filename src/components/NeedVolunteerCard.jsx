@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const NeedVolunteerCard = ({ needVolunteer }) => {
-    const {thumbnail, postTitle, category, deadline} = needVolunteer;
+  const { _id, thumbnail, postTitle, category, deadline } = needVolunteer;
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <figure>
@@ -11,9 +13,9 @@ const NeedVolunteerCard = ({ needVolunteer }) => {
       <div className="card-body">
         <h2 className="card-title">{postTitle}</h2>
         <p>{category}</p>
-        <p>{deadline}</p>
+        <p>{new Date(deadline).toLocaleDateString()}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">View Details</button>
+          <Link to={`/need-volunteer/${_id}`} className="btn btn-primary">View Details</Link>
         </div>
       </div>
     </div>
