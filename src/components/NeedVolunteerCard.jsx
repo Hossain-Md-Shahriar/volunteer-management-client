@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const NeedVolunteerCard = ({ needVolunteer }) => {
-  const { _id, thumbnail, postTitle, category, deadline } = needVolunteer;
+  const { _id, thumbnail, postTitle, category, deadline, volunteersNeeded } = needVolunteer;
   const [isClicked, setIsClicked] = useState(false);
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
@@ -16,6 +16,7 @@ const NeedVolunteerCard = ({ needVolunteer }) => {
         <h2 className="card-title">{postTitle}</h2>
         <p>{category}</p>
         <p>{new Date(deadline).toLocaleDateString()}</p>
+        <p>{volunteersNeeded}</p>
         <div className="card-actions justify-end">
           <Link
             to={`/need-volunteer/${_id}`}

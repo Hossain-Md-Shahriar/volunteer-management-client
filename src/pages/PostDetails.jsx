@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
 const PostDetails = () => {
@@ -25,9 +24,13 @@ const PostDetails = () => {
       <p>{new Date(deadline).toLocaleDateString()}</p>
       <p>{organizer.name}</p>
       <p>{organizer.email}</p>
-      <Link to={`/be-volunteer/${_id}`} className="btn">
-        Be a Volunteer
-      </Link>
+      {volunteersNeeded ? (
+        <Link to={`/be-volunteer/${_id}`} className="btn">Be a Volunteer</Link>
+      ) : (
+        <button className="btn cursor-pointer" disabled={true}>
+          Be a Volunteer
+        </button>
+      )}
     </div>
   );
 };

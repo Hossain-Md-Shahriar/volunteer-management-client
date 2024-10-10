@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingState from "../components/LoadingState";
 import useAxiosSecure from "../hooks/useAxiosSecure";
@@ -10,6 +9,7 @@ const BeAVolunteer = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [needVolunteer, setNeedVolunteer] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -17,9 +17,7 @@ const BeAVolunteer = () => {
   }, []);
 
   const getData = async () => {
-    const { data } = await axiosSecure.get(
-      `/all-need-volunteer/${id}`
-    );
+    const { data } = await axiosSecure.get(`/all-need-volunteer/${id}`);
     setNeedVolunteer(data);
     setLoading(false);
   };
@@ -70,7 +68,7 @@ const BeAVolunteer = () => {
       );
       console.log(data);
       toast.success("Requested!");
-      getData();
+      navigate("/manage-my-post");
     } catch (err) {
       console.log(err);
       toast.error(err.response.data);

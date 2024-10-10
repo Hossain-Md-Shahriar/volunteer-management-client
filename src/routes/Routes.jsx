@@ -8,7 +8,7 @@ import AddVolunteerPost from "../pages/AddVolunteerPost";
 import ManageMyPost from "../pages/ManageMyPost";
 import PrivateRoute from "./PrivateRoute";
 import ScrollToTop from "../components/ScrollToTop";
-import PostDetails from "../components/PostDetails";
+import PostDetails from "../pages/PostDetails";
 import BeAVolunteer from "../pages/BeAVolunteer";
 import UpdatePost from "../pages/UpdatePost";
 

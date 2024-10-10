@@ -8,7 +8,7 @@ const MyVolunteerRequest = ({
 }) => {
   const [toastId, setToastId] = useState(null);
 
-  const showConfirmationToast = (_id) => {
+  const showConfirmationToast = (_id, postId) => {
     // if the toast is already visible do nothing
     if (toastId) return;
 
@@ -20,7 +20,7 @@ const MyVolunteerRequest = ({
           <button
             onClick={() => {
               toast.dismiss(t.id); // Close the toast
-              cancelHandler(_id); // Call cancel logic
+              cancelHandler(_id, postId); // Call cancel logic
               setToastId(null); // reset the toast ID when dismissed
             }}
             className="px-2 py-1 ml-2 bg-green-500 text-white rounded"
@@ -47,10 +47,11 @@ const MyVolunteerRequest = ({
     setToastId(id);
   };
 
-  const cancelHandler = async (id) => {
+  const cancelHandler = async (id, postId) => {
+    console.log(postId);
     try {
       const { data } = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/volunteer-request/${id}`
+        `${import.meta.env.VITE_API_URL}/volunteer-request?id=${id}&postId=${postId}`
       );
       console.log(data);
       toast.success("Request Cancelled");
@@ -66,7 +67,9 @@ const MyVolunteerRequest = ({
   if (!volunteerRequests.length) {
     return (
       <div className="py-10">
-        <p className="text-center">You haven't made any request to be volunteer</p>
+        <p className="text-center">
+          You haven't made any request to be volunteer
+        </p>
       </div>
     );
   }
@@ -91,7 +94,12 @@ const MyVolunteerRequest = ({
               <td>{volunteerRequest.location}</td>
               <td className="">
                 <button
-                  onClick={() => showConfirmationToast(volunteerRequest._id)}
+                  onClick={() =>
+                    showConfirmationToast(
+                      volunteerRequest._id,
+                      volunteerRequest.postId
+                    )
+                  }
                   className="btn btn-error"
                 >
                   Cancel
