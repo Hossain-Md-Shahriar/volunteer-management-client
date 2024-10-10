@@ -4,39 +4,66 @@ import MyVolunteerRequest from "../components/MyVolunteerRequest";
 import { useEffect } from "react";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
+import LoadingState from "../components/LoadingState";
 
 const ManageMyPost = () => {
   const [needVolunteers, setNeedVolunteers] = useState([]);
+  const [needLoading, setNeedLoading] = useState(true);
   const [volunteerRequests, setVolunteerRequests] = useState([]);
+  const [requestLoading, setRequestLoading] = useState(true);
   const { user } = useAuth();
   useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-need-volunteers/${user?.email}`
-      );
-      setNeedVolunteers(data);
-    };
-    getData();
+    getNeedVolunteersData();
   }, []);
 
+  const getNeedVolunteersData = async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/all-need-volunteers/${user?.email}`
+    );
+    setNeedVolunteers(data);
+    setNeedLoading(false);
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/volunteer-requests/${user?.email}`
-      );
-      setVolunteerRequests(data);
-    };
-    getData();
+    getVolunteerRequestsData();
   }, []);
+
+  const getVolunteerRequestsData = async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/volunteer-requests/${user?.email}`
+    );
+    setVolunteerRequests(data);
+    setRequestLoading(false);
+  };
 
   return (
     <div>
       <h2 className="text-2xl">manage my post</h2>
-      <div>
-        <MyNeedVolunteer needVolunteers={needVolunteers} />
+      <div className="my-10">
+        <h3 className="text-2xl">
+          My Need Volunteer Post: {needVolunteers.length}
+        </h3>
+        {needLoading ? (
+          <LoadingState />
+        ) : (
+          <MyNeedVolunteer
+            needVolunteers={needVolunteers}
+            getNeedVolunteersData={getNeedVolunteersData}
+          />
+        )}
       </div>
-      <div>
-        <MyVolunteerRequest volunteerRequests={volunteerRequests} />
+      <div className="my-10">
+        <h3 className="text-2xl">
+          My Volunteer Requests: {volunteerRequests.length}
+        </h3>
+        {requestLoading ? (
+          <LoadingState />
+        ) : (
+          <MyVolunteerRequest
+            volunteerRequests={volunteerRequests}
+            getVolunteerRequestsData={getVolunteerRequestsData}
+          />
+        )}
       </div>
     </div>
   );

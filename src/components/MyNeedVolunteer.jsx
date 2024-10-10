@@ -1,37 +1,110 @@
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const MyNeedVolunteer = ({ needVolunteers }) => {
-  return (
-    <div className="my-10">
-      <h3 className="text-2xl">
-        My Need Volunteer Post: {needVolunteers.length}
-      </h3>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Post Title</th>
-              <th>Category</th>
-              <th>Location</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {needVolunteers.map((needVolunteer) => (
-              <tr key={needVolunteer._id}>
-                <td>{needVolunteer.postTitle}</td>
-                <td>{needVolunteer.category}</td>
-                <td>{needVolunteer.location}</td>
-                <td className="flex gap-2">
-                    <Link to={`/update/${needVolunteer._id}`} className="btn btn-success">Update</Link>
-                    <button className="btn btn-error">Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+const MyNeedVolunteer = ({ needVolunteers, getNeedVolunteersData }) => {
+  const [toastId, setToastId] = useState(null);
+
+  const showConfirmationToast = (_id) => {
+    // if the toast is already visible do nothing
+    if (toastId) return;
+
+    // create a new toast and store its ID
+    const id = toast(
+      (t) => (
+        <span>
+          Are you sure?
+          <button
+            onClick={() => {
+              toast.dismiss(t.id); // Close the toast
+              deleteHandler(_id); // Call delete logic
+              setToastId(null); // reset the toast ID when dismissed
+            }}
+            className="px-2 py-1 ml-2 bg-green-500 text-white rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id); // Dismiss toast if "No"
+              setToastId(null); // reset the toast ID when dismissed
+            }}
+            className="px-2 py-1 ml-2 bg-red-500 text-white rounded"
+          >
+            No
+          </button>
+        </span>
+      ),
+      {
+        duration: Infinity, // Keep toast open until dismissed
+      }
+    );
+
+    // Store the toast ID in state
+    setToastId(id);
+  };
+
+  const deleteHandler = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/need-volunteer/${id}`
+      );
+      console.log(data);
+      toast.success("Deleted Successfully!");
+
+      // refresh UI
+      getNeedVolunteersData();
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
+
+  if (!needVolunteers.length) {
+    return (
+      <div className="py-10">
+        <p className="text-center">You don't have any need volunteer post</p>
       </div>
+    );
+  }
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="table table-zebra">
+        {/* head */}
+        <thead>
+          <tr>
+            <th>Post Title</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {needVolunteers.map((needVolunteer) => (
+            <tr key={needVolunteer._id}>
+              <td>{needVolunteer.postTitle}</td>
+              <td>{needVolunteer.category}</td>
+              <td>{needVolunteer.location}</td>
+              <td className="flex gap-2">
+                <Link
+                  to={`/update/${needVolunteer._id}`}
+                  className="btn btn-success"
+                >
+                  Update
+                </Link>
+                <button
+                  onClick={() => showConfirmationToast(needVolunteer._id)}
+                  className="btn btn-error"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
