@@ -3,7 +3,6 @@ import { Link, useLoaderData } from "react-router-dom";
 
 const PostDetails = () => {
   const needVolunteer = useLoaderData();
-  const [isClicked, setIsClicked] = useState(false);
   const {
     _id,
     thumbnail,
@@ -17,7 +16,7 @@ const PostDetails = () => {
   } = needVolunteer;
   return (
     <div>
-        <h2 className="text-3xl">Volunteer Need Post Details</h2>
+      <h2 className="text-3xl">Volunteer Need Post Details</h2>
       <p>{postTitle}</p>
       <p>{description}</p>
       <p>{category}</p>
@@ -26,12 +25,7 @@ const PostDetails = () => {
       <p>{new Date(deadline).toLocaleDateString()}</p>
       <p>{organizer.name}</p>
       <p>{organizer.email}</p>
-      <Link
-        to={`/be-volunteer/${_id}`}
-        onClick={() => setIsClicked(true)}
-        className="btn"
-      >
-        {isClicked && <span className="loading loading-spinner"></span>}
+      <Link to={`/be-volunteer/${_id}`} className="btn">
         Be a Volunteer
       </Link>
     </div>

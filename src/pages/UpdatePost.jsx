@@ -1,26 +1,30 @@
-import { useParams } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingState from "../components/LoadingState";
 
-const BeAVolunteer = () => {
+const UpdatePost = () => {
+  const [startDate, setStartDate] = useState(new Date());
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [needVolunteer, setNeedVolunteer] = useState({});
   const [loading, setLoading] = useState(true);
+  const [needVolunteer, setNeedVolunteer] = useState({});
   useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/all-need-volunteer/${id}`
+      );
+      setNeedVolunteer(data);
+      setLoading(false);
+      setStartDate(data.deadline);
+    };
     getData();
   }, []);
-
-  const getData = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/all-need-volunteer/${id}`
-    );
-    setNeedVolunteer(data);
-    setLoading(false);
-  };
 
   const {
     _id,
@@ -30,48 +34,44 @@ const BeAVolunteer = () => {
     category,
     location,
     volunteersNeeded,
-    deadline,
-    organizer,
   } = needVolunteer;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (organizer.email === user?.email) {
-      return toast.error("Action Not Permitted!");
-    }
     const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const suggestion = form.suggestion.value;
-    const status = form.status.value;
-    const volunteerRequestData = {
-      postId: _id,
+    const thumbnail = form.thumbnail.value;
+    const postTitle = form.postTitle.value;
+    const description = form.description.value;
+    const category = form.category.value;
+    const location = form.location.value;
+    const volunteersNeeded = parseInt(form.volunteersNeeded.value);
+    const deadline = startDate;
+
+    const updatedNeedVolunteerData = {
       thumbnail,
       postTitle,
       description,
       category,
       location,
+      volunteersNeeded,
       deadline,
-      suggestion,
-      status,
-      organizer,
-      volunteer: {
-        name,
-        email,
+      organizer: {
+        name: user?.displayName,
+        email: user?.email,
       },
     };
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/volunteer-request`,
-        volunteerRequestData
+      const { data } = await axios.put(
+        `${import.meta.env.VITE_API_URL}/all-need-volunteer/${_id}`,
+        updatedNeedVolunteerData
       );
       console.log(data);
-      toast.success("Requested!");
-      getData();
+      toast.success("Post Updated Successfully!");
+      navigate("/manage-my-post");
     } catch (err) {
       console.log(err);
-      toast.error(err.response.data);
+      toast.error(err.message);
     }
   };
 
@@ -83,7 +83,7 @@ const BeAVolunteer = () => {
     <div className="my-10">
       <section className="max-w-2xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-          Be a Volunteer
+          Update Volunteer Post
         </h2>
 
         <form onSubmit={handleFormSubmit}>
@@ -101,7 +101,6 @@ const BeAVolunteer = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 defaultValue={thumbnail}
-                disabled
               />
             </div>
 
@@ -118,7 +117,6 @@ const BeAVolunteer = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 defaultValue={postTitle}
-                disabled
               />
             </div>
 
@@ -131,25 +129,24 @@ const BeAVolunteer = () => {
                 id="description"
                 name="description"
                 defaultValue={description}
-                disabled
               ></textarea>
             </div>
 
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="category"
-              >
+            <div className="flex flex-col gap-2 ">
+              <label className="text-gray-700 " htmlFor="category">
                 Category
               </label>
-              <input
+              <select
                 id="category"
                 name="category"
-                type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                className="border p-2 rounded-md"
                 defaultValue={category}
-                disabled
-              />
+              >
+                <option value="Healthcare">Healthcare</option>
+                <option value="Education">Education</option>
+                <option value="Social Service">Social Service</option>
+                <option value="Animal Welfare">Animal Welfare</option>
+              </select>
             </div>
 
             <div>
@@ -165,7 +162,6 @@ const BeAVolunteer = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 defaultValue={location}
-                disabled
               />
             </div>
 
@@ -182,50 +178,17 @@ const BeAVolunteer = () => {
                 type="number"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 defaultValue={volunteersNeeded}
-                disabled
               />
             </div>
 
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="deadline"
-              >
-                Deadline
-              </label>
-              <input
-                id="deadline"
-                name="deadline"
-                type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                defaultValue={new Date(deadline).toLocaleDateString()}
-                disabled
-              />
-            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-gray-700">Deadline</label>
 
-            <div>
-              <label className="text-gray-700 dark:text-gray-200">
-                Organizer Name
-              </label>
-              <input
-                name="organizer_name"
-                type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                defaultValue={organizer?.name}
-                disabled
-              />
-            </div>
-
-            <div>
-              <label className="text-gray-700 dark:text-gray-200">
-                Organizer email
-              </label>
-              <input
-                name="organizer_email"
-                type="email"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                defaultValue={organizer?.email}
-                disabled
+              {/* Date Picker Input Field */}
+              <DatePicker
+                className="border p-2 rounded-md w-full"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
               />
             </div>
 
@@ -234,7 +197,7 @@ const BeAVolunteer = () => {
                 className="text-gray-700 dark:text-gray-200"
                 htmlFor="name"
               >
-                Volunteer Name
+                Organizer Name
               </label>
               <input
                 id="name"
@@ -251,7 +214,7 @@ const BeAVolunteer = () => {
                 className="text-gray-700 dark:text-gray-200"
                 htmlFor="email"
               >
-                Volunteer Email
+                Organizer email
               </label>
               <input
                 id="email"
@@ -262,42 +225,11 @@ const BeAVolunteer = () => {
                 disabled
               />
             </div>
-
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="suggestion"
-              >
-                Suggestion
-              </label>
-              <input
-                id="suggestion"
-                name="suggestion"
-                type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="status"
-              >
-                Status
-              </label>
-              <input
-                id="status"
-                name="status"
-                type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                defaultValue="requested"
-              />
-            </div>
           </div>
 
           <div className="flex justify-end mt-6">
             <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              Request
+              Update Post
             </button>
           </div>
         </form>
@@ -306,4 +238,4 @@ const BeAVolunteer = () => {
   );
 };
 
-export default BeAVolunteer;
+export default UpdatePost;

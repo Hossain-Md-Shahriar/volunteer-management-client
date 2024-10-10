@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import ScrollToTop from "../components/ScrollToTop";
 import PostDetails from "../components/PostDetails";
 import BeAVolunteer from "../pages/BeAVolunteer";
+import UpdatePost from "../pages/UpdatePost";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BeAVolunteer />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivateRoute>
+            <UpdatePost />
           </PrivateRoute>
         ),
       },
