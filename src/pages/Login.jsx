@@ -3,11 +3,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Login = () => {
   const { signIn, signInWithGoogle, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -25,8 +27,15 @@ const Login = () => {
     try {
       const result = await signIn(email, password);
       console.log(result?.user);
+
+      // get token from server using email
+      const { data } = await axiosSecure.post("/jwt", {
+        email: result?.user?.email,
+      });
+      console.log(data);
+
       toast.success("logged In successfully");
-      navigate(from, {replace: true});
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -37,8 +46,15 @@ const Login = () => {
     try {
       const result = await signInWithGoogle();
       console.log(result?.user);
+
+      // get token from server using email
+      const { data } = await axiosSecure.post("/jwt", {
+        email: result?.user?.email,
+      });
+      console.log(data);
+
       toast.success("Logged In Successfully");
-      navigate(from, {replace: true});
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
       toast.error(err?.message);

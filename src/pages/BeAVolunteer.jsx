@@ -4,8 +4,10 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingState from "../components/LoadingState";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const BeAVolunteer = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { id } = useParams();
   const [needVolunteer, setNeedVolunteer] = useState({});
@@ -15,8 +17,8 @@ const BeAVolunteer = () => {
   }, []);
 
   const getData = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/all-need-volunteer/${id}`
+    const { data } = await axiosSecure.get(
+      `/all-need-volunteer/${id}`
     );
     setNeedVolunteer(data);
     setLoading(false);
@@ -62,8 +64,8 @@ const BeAVolunteer = () => {
     };
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/volunteer-request`,
+      const { data } = await axiosSecure.post(
+        `/volunteer-request`,
         volunteerRequestData
       );
       console.log(data);

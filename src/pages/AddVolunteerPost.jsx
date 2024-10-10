@@ -5,11 +5,13 @@ import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddVolunteerPost = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useAuth();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -39,8 +41,8 @@ const AddVolunteerPost = () => {
     };
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/need-volunteer`,
+      const { data } = await axiosSecure.post(
+        `/need-volunteer`,
         needVolunteerData
       );
       console.log(data);

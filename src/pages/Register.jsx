@@ -39,6 +39,13 @@ const Register = () => {
       const result = await createUser(email, password);
       await updateUserProfile(name, photo);
       setUser({ ...result?.user, displayName: name, photoURL: photo });
+
+      // get token from server using email
+      const { data } = await axiosSecure.post("/jwt", {
+        email: result?.user?.email,
+      });
+      console.log(data);
+
       toast.success("Registration Successful");
       navigate(from, { replace: true });
     } catch (err) {
@@ -51,6 +58,13 @@ const Register = () => {
     try {
       const result = await signInWithGoogle();
       console.log(result?.user);
+
+      // get token from server using email
+      const { data } = await axiosSecure.post("/jwt", {
+        email: result?.user?.email,
+      });
+      console.log(data);
+
       toast.success("Logged In Successfully");
       navigate(from, { replace: true });
     } catch (err) {

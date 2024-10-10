@@ -6,8 +6,10 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingState from "../components/LoadingState";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const UpdatePost = () => {
+  const axiosSecure = useAxiosSecure();
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -16,9 +18,7 @@ const UpdatePost = () => {
   const [needVolunteer, setNeedVolunteer] = useState({});
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-need-volunteer/${id}`
-      );
+      const { data } = await axiosSecure.get(`/all-need-volunteer/${id}`);
       setNeedVolunteer(data);
       setLoading(false);
       setStartDate(data.deadline);
@@ -62,8 +62,8 @@ const UpdatePost = () => {
     };
 
     try {
-      const { data } = await axios.put(
-        `${import.meta.env.VITE_API_URL}/all-need-volunteer/${_id}`,
+      const { data } = await axiosSecure.put(
+        `/all-need-volunteer/${_id}`,
         updatedNeedVolunteerData
       );
       console.log(data);

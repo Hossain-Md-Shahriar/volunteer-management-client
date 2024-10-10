@@ -5,8 +5,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import LoadingState from "../components/LoadingState";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ManageMyPost = () => {
+  const axiosSecure = useAxiosSecure();
   const [needVolunteers, setNeedVolunteers] = useState([]);
   const [needLoading, setNeedLoading] = useState(true);
   const [volunteerRequests, setVolunteerRequests] = useState([]);
@@ -17,8 +19,8 @@ const ManageMyPost = () => {
   }, []);
 
   const getNeedVolunteersData = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/all-need-volunteers/${user?.email}`
+    const { data } = await axiosSecure.get(
+      `/all-need-volunteers/${user?.email}`
     );
     setNeedVolunteers(data);
     setNeedLoading(false);
@@ -29,8 +31,8 @@ const ManageMyPost = () => {
   }, []);
 
   const getVolunteerRequestsData = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/volunteer-requests/${user?.email}`
+    const { data } = await axiosSecure.get(
+      `/volunteer-requests/${user?.email}`
     );
     setVolunteerRequests(data);
     setRequestLoading(false);
