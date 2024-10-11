@@ -73,7 +73,7 @@ const Navbar = () => {
               <li>
                 <details>
                   <summary>My Profile</summary>
-                  <ul className="p-2 w-52 dropdown-content text-black">
+                  <ul className="p-2 w-52 dropdown-content text-black z-50">
                     <li>
                       <NavLink to="/add-volunteer-post">
                         Add Volunteer Post

@@ -17,6 +17,10 @@ export default {
         secondary2: "#EA906C",
         secondary3: "#EEEEEE",
       },
+      borderColor: {
+        primary2: "#B31312",
+        secondary2: "#EA906C",
+      },
       fontFamily: {
         inter: "'Inter', sans-serif",
       }
