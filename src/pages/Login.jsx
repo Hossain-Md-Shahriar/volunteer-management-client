@@ -69,7 +69,7 @@ const Login = () => {
     >
       <div className="max-w-6xl mx-auto pt-16">
         <div className="mx-4">
-          <div className="max-w-sm mx-auto shadow-2xl px-5 py-7 rounded-xl backdrop-blur-sm bg-white/60">
+          <div className="max-w-sm mx-auto shadow-2xl px-5 py-7 rounded-xl backdrop-blur-md bg-white/60">
             <h2 className="text-2xl font-semibold mb-4 text-center">
               Login to Your Account
             </h2>
