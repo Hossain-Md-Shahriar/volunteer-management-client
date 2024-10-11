@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import bgImg from "../assets/login_bg.jpg";
 
 const Login = () => {
   const { signIn, signInWithGoogle, user } = useAuth();
@@ -62,13 +63,16 @@ const Login = () => {
   };
 
   return (
-    <div className="dark:bg-[#101010] transition-all duration-150 pb-20">
-      <div className="max-w-6xl mx-auto py-16 dark:text-[#f0f0f0]">
+    <div
+      className="pb-20 bg-no-repeat bg-cover"
+      style={{ backgroundImage: `url(${bgImg})` }}
+    >
+      <div className="max-w-6xl mx-auto pt-16">
         <div className="mx-4">
-          <h2 className="text-2xl font-semibold mb-6 text-center">
-            Login to Your Account
-          </h2>
-          <div className="md:w-1/2 lg:w-1/3 mx-auto shadow-lg px-5 py-8 rounded-xl border-2 border-[#4793af54]">
+          <div className="max-w-sm mx-auto shadow-2xl px-5 py-7 rounded-xl backdrop-blur-sm bg-white/60">
+            <h2 className="text-2xl font-semibold mb-4 text-center">
+              Login to Your Account
+            </h2>
             <form onSubmit={handleLogin}>
               <div className="form-control mb-2">
                 <label className="label">
@@ -78,7 +82,7 @@ const Login = () => {
                   type="email"
                   placeholder="email"
                   name="email"
-                  className="input input-bordered dark:bg-[#49494986]"
+                  className="input input-bordered"
                   required
                 />
               </div>
@@ -90,22 +94,22 @@ const Login = () => {
                   type="password"
                   placeholder="password"
                   name="password"
-                  className="input input-bordered dark:bg-[#49494986]"
+                  className="input input-bordered"
                   required
                 />
               </div>
               <div className="form-control mt-7">
-                <button className="btn btn-neutral border-none bg-[#4793AF] hover:bg-[#4793afc3] text-white">
+                <button className="btn btn-neutral border-none bg-primary2/80 hover:bg-primary2 text-white">
                   Login
                 </button>
               </div>
             </form>
-            <p className="py-3 text-center text-sm text-[#797979] dark:text-[#b3b3b3]">
+            <p className="py-3 text-center text-sm text-[#797979]">
               Or,
             </p>
             <div
               onClick={handleGoogleSignIn}
-              className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+              className="flex cursor-pointer items-center justify-center text-gray-600 transition-colors duration-300 transform border rounded-lg bg-white hover:bg-gray-50"
             >
               <div className="px-4 py-2">
                 <img className="w-8" src={google} alt="" />
@@ -115,9 +119,9 @@ const Login = () => {
                 Sign in with Google
               </span>
             </div>
-            <p className="text-center pt-3 border-t dark:border-[#565656] mt-5">
+            <p className="text-center pt-3 border-t mt-5">
               Don't have an account?{" "}
-              <Link to="/register" className="text-[#4793AF] font-semibold">
+              <Link to="/register" className="text-secondary1 font-semibold">
                 Register
               </Link>
             </p>
