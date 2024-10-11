@@ -1,157 +1,146 @@
-import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { IoMoon } from "react-icons/io5";
-import { IoSunny } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 import useAuth from "../hooks/useAuth";
+import { Skeleton } from "@mui/material";
+import { IoIosMenu } from "react-icons/io";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
-  const [dark, setDark] = useState(false);
+  const { user, logOut, loading } = useAuth();
 
   const navLinks = (
     <>
       <li>
         <NavLink
           to="/"
-          className={({ isActive }) => `${isActive ? "border-2" : "border-0"}`}
+          style={({ isActive }) => ({
+            "--underline-width": isActive ? "100%" : "0%",
+          })}
         >
-          Home
+          <span className="pb-1 px-1 relative before:absolute before:w-[var(--underline-width)] before:h-[2px] before:bottom-0 before:left-0 before:bg-secondary3 hover:before:w-full before:transition-[width] before:duration-200">
+            Home
+          </span>
         </NavLink>
       </li>
       <li>
         <NavLink
           to="/need-volunteer"
-          className={({ isActive }) => `${isActive ? "border-2" : "border-0"}`}
+          style={({ isActive }) => ({
+            "--underline-width": isActive ? "100%" : "0%",
+          })}
         >
-          Need Volunteer
+          <span className="pb-1 px-1 relative before:absolute before:w-[var(--underline-width)] before:h-[2px] before:bottom-0 before:left-0 before:bg-secondary3 hover:before:w-full before:transition-[width] before:duration-200">
+            Need Volunteer
+          </span>
         </NavLink>
       </li>
     </>
   );
 
-  const darkModeHandler = () => {
-    setDark(!dark);
-    document.body.classList.toggle("dark");
-  };
-
   return (
-    <div className="navbar bg-base-100 justify-between dark:bg-black">
+    <div className="navbar bg-primary1 text-secondary3 justify-between py-4 px-3 md:px-6 text-sm shadow-lg">
       <div className="navbar-start">
         <div className="dropdown">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost lg:hidden p-0"
+            className="btn btn-ghost lg:hidden p-0 mr-2"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+            <IoIosMenu className="text-2xl" />
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
-            {navLinks}
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/need-volunteer">Need Volunteer</NavLink>
+            </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">Volunteer</Link>
+        <Link to="/" className="text-xl font-semibold">
+          Volunteer
+        </Link>
       </div>
-      <div className="flex justify-end">
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+      <div className="flex justify-end items-center">
+        <div className="hidden lg:flex">
+          <ul className="p-0 flex items-center gap-6 text-sm">{navLinks}</ul>
         </div>
-        <div className="navbar-end flex items-center gap-3 mr-2">
-          <div className="dropdown dropdown-end">
-            <button tabIndex={0} className="sm:w-20 text-sm">
-              My Profile
-            </button>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-            >
+        <div className="flex items-center gap-3">
+          <div className="lg:ml-[10px] dropdown dropdown-end">
+            <ul className="menu menu-horizontal px-1">
               <li>
-                <NavLink
-                  to="/add-volunteer-post"
-                  className={({ isActive }) =>
-                    `${isActive ? "border-2" : "border-0"}`
-                  }
-                >
-                  Add Volunteer Post
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/manage-my-post"
-                  className={({ isActive }) =>
-                    `${isActive ? "border-2" : "border-0"}`
-                  }
-                >
-                  Manage My Post
-                </NavLink>
+                <details>
+                  <summary>My Profile</summary>
+                  <ul className="p-2 w-52 dropdown-content text-black">
+                    <li>
+                      <NavLink to="/add-volunteer-post">
+                        Add Volunteer Post
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/manage-my-post">Manage My Post</NavLink>
+                    </li>
+                  </ul>
+                </details>
               </li>
             </ul>
           </div>
-          {user ? (
-            <div className="flex gap-3 items-center">
-              <div
-                className="size-12 rounded-full overflow-hidden"
-                id="clickable"
-              >
-                <img
-                  referrerPolicy="no-referrer"
-                  alt="User Profile Photo"
-                  src={user?.photoURL}
-                />
-              </div>
-              <Tooltip
-                anchorSelect="#clickable"
-                clickable
-                style={{
-                  borderRadius: "8px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "10px",
-                  padding: "10px",
-                }}
-              >
-                <p className="font-medium text-sm">{user.displayName}</p>
-                <button
-                  onClick={logOut}
-                  className="btn bg-[#4793AF] text-white border-none text-sm hover:bg-[#32697c]"
+
+          <div className="size-12 ml-2 flex justify-center items-center">
+            {loading ? (
+              <Skeleton variant="circular" width={48} height={48} />
+            ) : user ? (
+              <div className="flex gap-3 items-center">
+                <div
+                  className="size-12 rounded-full overflow-hidden"
+                  id="clickable"
                 >
-                  Log out
-                </button>
-              </Tooltip>
-            </div>
-          ) : (
-            <>
-              <NavLink
-                className={({ isActive }) =>
-                  `p-2 rounded-md ${isActive ? "border-2" : "border-0"}`
-                }
-                to="/login"
-              >
-                Login
-              </NavLink>
-            </>
-          )}
+                  <img
+                    referrerPolicy="no-referrer"
+                    alt="User Profile Photo"
+                    src={user?.photoURL}
+                  />
+                </div>
+                <Tooltip
+                  anchorSelect="#clickable"
+                  clickable
+                  style={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "10px",
+                    padding: "10px",
+                  }}
+                >
+                  <p className="font-medium text-sm">{user.displayName}</p>
+                  <button
+                    onClick={logOut}
+                    className="py-2 px-4 rounded-md bg-secondary1 text-white border-none text-sm hover:bg-secondary1/75 transition-colors"
+                  >
+                    Log out
+                  </button>
+                </Tooltip>
+              </div>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className="w-12"
+                  style={({ isActive }) => ({
+                    "--underline-width": isActive ? "100%" : "0%",
+                  })}
+                >
+                  <span className="pb-1 px-1 relative before:absolute before:w-[var(--underline-width)] before:h-[2px] before:bottom-0 before:left-0 before:bg-secondary3 hover:before:w-full before:transition-[width] before:duration-200">
+                    Login
+                  </span>
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
-        <button onClick={darkModeHandler} className="text-xl dark:text-white">
-          {dark ? <IoSunny /> : <IoMoon />}
-        </button>
       </div>
     </div>
   );
