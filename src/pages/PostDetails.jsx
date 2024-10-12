@@ -73,7 +73,7 @@ const PostDetails = () => {
                 </Link>
               </div>
             ) : (
-              <div className="flex items-center gap-3 text-lg text-red-700 p-2 bg-red-200/75 rounded-lg border-2 border-red-500/20">
+              <div className="flex items-center gap-3 text-lg text-orange-700 p-2 bg-orange-200/45 rounded-lg border-2 border-orange-500/20">
                 <FaExclamationCircle />
                 <span>
                   We have reached maximum number of volunteers required
