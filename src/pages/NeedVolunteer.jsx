@@ -5,6 +5,7 @@ import NeedVolunteerCard from "../components/NeedVolunteerCard";
 import LoadingState from "../components/LoadingState";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import NeedVolunteerTable from "../components/NeedVolunteerTable";
 
 const NeedVolunteer = () => {
   const [allNeedVolunteer, setAllNeedVolunteer] = useState([]);
@@ -66,7 +67,7 @@ const NeedVolunteer = () => {
             ))}
           </div>
         ) : (
-          <div>Hello</div>
+          <NeedVolunteerTable allNeedVolunteer={allNeedVolunteer} />
         )}
       </div>
     </div>

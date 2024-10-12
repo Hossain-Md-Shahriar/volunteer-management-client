@@ -22,7 +22,7 @@ const NeedVolunteerCard = ({ needVolunteer }) => {
           <p className="flex items-center gap-1 group-hover:text-primary2 text-black font-medium">
             <BiCategory className="text-lg" /> {category}
           </p>
-          <p className="bg-secondary2/25 border border-primary2/35 rounded-full px-3 text-primary2/85">
+          <p className="text-sm bg-secondary2/25 border border-primary2/35 rounded-full px-3 text-primary2/85">
             Deadline:{" "}
             <span className="font-semibold">
               {new Date(deadline).toLocaleDateString()}
