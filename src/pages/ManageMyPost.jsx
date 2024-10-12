@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import LoadingState from "../components/LoadingState";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { FaCircle } from "react-icons/fa";
 
 const ManageMyPost = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,11 +39,14 @@ const ManageMyPost = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl">manage my post</h2>
-      <div className="my-10">
-        <h3 className="text-2xl">
-          My Need Volunteer Post: {needVolunteers.length}
+    <div className="max-w-7xl mx-auto px-4 pt-16 pb-28">
+      <div className="flex gap-4 items-center text-3xl sm:text-4xl font-bold py-4 text-primary2">
+        <FaCircle className="text-xl" />
+        <h2>Manage My Post</h2>
+      </div>
+      <div className="mt-10 mb-24">
+        <h3 className="text-2xl text-center pb-6 font-bold text-black/80">
+          My Need Volunteer Post
         </h3>
         {needLoading ? (
           <LoadingState />
@@ -54,8 +58,8 @@ const ManageMyPost = () => {
         )}
       </div>
       <div className="my-10">
-        <h3 className="text-2xl">
-          My Volunteer Requests: {volunteerRequests.length}
+        <h3 className="text-2xl text-center pb-6 font-bold text-black/80">
+          My Volunteer Requests
         </h3>
         {requestLoading ? (
           <LoadingState />

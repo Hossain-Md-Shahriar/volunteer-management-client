@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../style/NeedVolunteerTable.css";
+import "../style/table.css";
 
 const NeedVolunteerTable = ({ allNeedVolunteer }) => {
   const [isClicked, setIsClicked] = useState([false, ""]);
   return (
-    <div className="overflow-auto rounded-lg border">
+    <div className="overflow-x-auto rounded-lg border">
       <table>
         <thead>
           <tr>
