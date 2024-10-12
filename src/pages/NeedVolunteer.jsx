@@ -6,6 +6,7 @@ import LoadingState from "../components/LoadingState";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import NeedVolunteerTable from "../components/NeedVolunteerTable";
+import { FaCircle } from "react-icons/fa";
 
 const NeedVolunteer = () => {
   const [allNeedVolunteer, setAllNeedVolunteer] = useState([]);
@@ -32,9 +33,11 @@ const NeedVolunteer = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 pt-16 pb-28">
-      <h3 className="text-2xl">we need volunteer {allNeedVolunteer.length}</h3>
+      <div className="flex gap-4 items-center text-3xl sm:text-4xl font-bold py-4 text-primary2">
+        <FaCircle className="text-xl" />
+        <h2>Need Volunteer</h2>
+      </div>
       <div className="my-4 sm:my-8 flex justify-end items-center gap-4 sm:gap-8 flex-wrap">
-        <div></div>
         <form
           onSubmit={handleSearch}
           className="border-2 rounded-lg p-1 focus-within:shadow-md"
@@ -47,12 +50,20 @@ const NeedVolunteer = () => {
             className="outline-none h-full pl-2"
             placeholder="Enter Post Title"
           />
-          <button className="btn">Search</button>
+          <button className="bg-primary1/85 hover:bg-primary1 transition-all py-1 px-3 rounded-md text-white">
+            Search
+          </button>
         </form>
-        <button onClick={() => setLayout(!layout)} className="btn">
-          Change Layout{" "}
+        <button
+          onClick={() => setLayout(!layout)}
+          className="text-2xl text-sky-700 flex items-center gap-2"
+          title="Change Layout"
+        >
           {layout ? <GiHamburgerMenu /> : <BsFillGrid3X3GapFill />}
         </button>
+      </div>
+      <div>
+        <p className="text-end pb-2 font-medium text-sm text-black/70">Results: {allNeedVolunteer.length}</p>
       </div>
       <div>
         {loading ? (
