@@ -35,7 +35,7 @@ const NeedVolunteerTable = ({ allNeedVolunteer }) => {
                 <span>{needVolunteer.category}</span>
               </td>
               <td>
-                <p className="text-sm bg-secondary2/25 border border-primary2/35 rounded-full px-3 text-primary2/85">
+                <p className="text-sm bg-green-300/45 border border-green-500 rounded-full px-3 text-green-700">
                   {new Date(needVolunteer.deadline).toLocaleDateString()}
                 </p>
               </td>
@@ -50,7 +50,7 @@ const NeedVolunteerTable = ({ allNeedVolunteer }) => {
                   to={`/need-volunteer/${needVolunteer._id}`}
                   onClick={() => setIsClicked([true, needVolunteer._id])}
                 >
-                  <button className="flex items-center justify-center bg-primary1/90 hover:bg-primary1 transition-all text-secondary3 py-2 px-2 w-full rounded-md">
+                  <button className="font-medium flex items-center justify-center bg-primary1/90 hover:bg-primary1 transition-all text-secondary3 py-2 px-2 w-full rounded-md">
                     {isClicked[0] && isClicked[1] === needVolunteer._id ? (
                       <span className="loading loading-spinner"></span>
                     ) : (

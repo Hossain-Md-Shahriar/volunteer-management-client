@@ -37,7 +37,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-primary1 text-secondary3 justify-between py-4 px-3 md:px-6 text-sm shadow-lg">
+    <div className="navbar bg-[#0f5788] text-secondary3 justify-between py-4 px-3 md:px-6 text-sm shadow-lg">
       <div className="navbar-start">
         <div className="dropdown">
           <div

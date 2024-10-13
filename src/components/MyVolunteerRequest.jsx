@@ -101,7 +101,7 @@ const MyVolunteerRequest = ({
               <td>{volunteerRequest.category}</td>
               <td>{volunteerRequest.location}</td>
               <td className="">
-                <span className="text-sm bg-secondary2/25 border border-primary2/35 rounded-full px-3 text-primary2/85 w-28">
+                <span className="text-sm bg-green-300/45 border border-green-500 rounded-full px-3 text-green-700 w-28">
                   {new Date(volunteerRequest.deadline).toLocaleDateString()}
                 </span>
               </td>

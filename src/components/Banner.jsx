@@ -48,7 +48,7 @@ const Banner = () => {
                 </Fade>
                 <div className="flex justify-center">
                   <button className="text-white text-lg font-semibold mt-7 py-[10px] px-5 bg-primary2/90 rounded-md hover:bg-primary2/70 transition-all duration-150">
-                    Exlore Now
+                    Learn More
                   </button>
                 </div>
               </div>
@@ -79,7 +79,7 @@ const Banner = () => {
                 </Fade>
                 <div className="flex justify-center">
                   <button className="text-white text-lg font-semibold mt-7 py-[10px] px-5 bg-primary2/90 rounded-md hover:bg-primary2/70 transition-all duration-150">
-                    Exlore Now
+                    Learn More
                   </button>
                 </div>
               </div>
@@ -98,7 +98,8 @@ const Banner = () => {
                   delay={200}
                 >
                   <h2 className="text-white text-4xl md:text-5xl font-bold drop-shadow-xl text-center">
-                    Care for Health, Care for <span className="text-[#50e3e5]">Life</span>
+                    Care for Health, Care for{" "}
+                    <span className="text-[#50e3e5]">Life</span>
                   </h2>
                   <p className="text-white text-lg mt-5 text-center drop-shadow-lg">
                     Be part of something bigger. Help us promote health and
@@ -108,7 +109,7 @@ const Banner = () => {
                 </Fade>
                 <div className="flex justify-center">
                   <button className="text-white text-lg font-semibold mt-7 py-[10px] px-5 bg-primary2/90 rounded-md hover:bg-primary2/70 transition-all duration-150">
-                    Exlore Now
+                    Learn More
                   </button>
                 </div>
               </div>
