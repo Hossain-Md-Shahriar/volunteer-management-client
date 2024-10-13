@@ -1,5 +1,4 @@
 import { Link, useLoaderData } from "react-router-dom";
-import img from "../assets/login_bg.jpg";
 import { BiCategory } from "react-icons/bi";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { FaExclamationCircle } from "react-icons/fa";
@@ -30,7 +29,7 @@ const PostDetails = () => {
           <div className="h-full rounded-lg overflow-hidden shadow-md bg-gray-300">
             <img
               className="w-full h-full object-cover object-center"
-              src={img}
+              src={thumbnail}
               alt=""
             />
           </div>
@@ -57,10 +56,10 @@ const PostDetails = () => {
           </p>
           <div className="border-l-4 pl-3 my-6 border-secondary2/60">
             <h3 className="text-sm font-bold mb-1">Organizer:</h3>
-            <p className="text-sm font-semibold">Name: {organizer.name}</p>
-            <p className="text-sm font-semibold">Email: {organizer.email}</p>
+            <p className="text-sm font-semibold">Name: {organizer?.name}</p>
+            <p className="text-sm font-semibold">Email: {organizer?.email}</p>
           </div>
-          {volunteersNeeded ? (
+          {volunteersNeeded > 0 ? (
             <div className="pt-3">
               <Link
                 to={`/be-volunteer/${_id}`}

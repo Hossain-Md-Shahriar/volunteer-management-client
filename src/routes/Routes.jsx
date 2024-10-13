@@ -11,6 +11,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import PostDetails from "../pages/PostDetails";
 import BeAVolunteer from "../pages/BeAVolunteer";
 import UpdatePost from "../pages/UpdatePost";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         <Main />
       </>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

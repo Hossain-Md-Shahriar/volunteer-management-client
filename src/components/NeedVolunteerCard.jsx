@@ -16,11 +16,11 @@ const NeedVolunteerCard = ({ needVolunteer }) => {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <div className="flex flex-col justify-between group p-4 rounded-xl transform hover:-translate-y-1 shadow-xl hover:shadow-2xl transition-all duration-200">
-      <div className="overflow-hidden rounded-lg w-full h-56">
+      <div className="overflow-hidden rounded-lg w-full h-56 bg-gray-300">
         <img
           className="w-full h-full object-center object-cover"
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
+          src={thumbnail}
+          alt=""
         />
       </div>
       <div className="space-y-2 pt-3">

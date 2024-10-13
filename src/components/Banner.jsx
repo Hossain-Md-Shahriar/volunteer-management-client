@@ -39,7 +39,7 @@ const Banner = () => {
                     Empower Through{" "}
                     <span className="text-[#50e3e5]">Education</span>
                   </h2>
-                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg">
+                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg px-6 sm:px-0">
                     Join our mission to provide educational opportunities for
                     all. Volunteer as a tutor, mentor, or coordinator, and help
                     shape the future by making learning accessible to every
@@ -70,7 +70,7 @@ const Banner = () => {
                     Building Communities with{" "}
                     <span className="text-[#50e3e5]">Social Service</span>
                   </h2>
-                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg">
+                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg px-6 sm:px-0">
                     Your time and dedication can create lasting change.
                     Participate in our social service programs to uplift
                     communities, support the elderly, and care for those in
@@ -101,7 +101,7 @@ const Banner = () => {
                     Care for Health, Care for{" "}
                     <span className="text-[#50e3e5]">Life</span>
                   </h2>
-                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg">
+                  <p className="text-white text-lg mt-5 text-center drop-shadow-lg px-6 sm:px-0">
                     Be part of something bigger. Help us promote health and
                     well-being by volunteering in our healthcare initiatives,
                     offering care and compassion to those who need it most.

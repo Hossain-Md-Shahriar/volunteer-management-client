@@ -1,3 +1,5 @@
+import logo from "../assets/logo.png";
+
 const Footer = () => {
   return (
     <footer className="px-4 divide-y bg-[#07181f] text-gray-100 py-10">
@@ -8,12 +10,15 @@ const Footer = () => {
             href="#"
             className="flex justify-center space-x-3 lg:justify-start"
           >
-            <span className="self-center text-2xl font-semibold">Volunteer</span>
+            <div className="flex items-center gap-2 text-xl font-semibold">
+              <img className="w-8 h-8" src={logo} alt="" />
+              <span>CareBridge</span>
+            </div>
           </a>
           <div className="text-sm mt-3 space-y-1">
             <p>Phone: +1-555-123-4567</p>
             <p>Email: xyz@gmail.com</p>
-            <p>Address: 123 Elm Street, Springfield</p>
+            <p>Address: 123 Rankin Street, Dhaka</p>
           </div>
         </div>
         <div className="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-4">
@@ -35,15 +40,9 @@ const Footer = () => {
                   Privacy & Security
                 </a>
               </li>
-              <li>
-                <a rel="noopener noreferrer" href="#">
-                  Exclusive Paintings
-                </a>
-              </li>
             </ul>
           </div>
           <div className="space-y-3">
-            {/* <h3 className="tracking-wide uppercase text-gray-50">Company</h3> */}
             <ul className="space-y-1">
               <li>
                 <a rel="noopener noreferrer" href="#">
@@ -73,11 +72,6 @@ const Footer = () => {
               <li>
                 <a rel="noopener noreferrer" href="#">
                   Terms of Service
-                </a>
-              </li>
-              <li>
-                <a rel="noopener noreferrer" href="#">
-                  Purchase
                 </a>
               </li>
             </ul>

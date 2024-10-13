@@ -3,6 +3,7 @@ import { Tooltip } from "react-tooltip";
 import useAuth from "../hooks/useAuth";
 import { Skeleton } from "@mui/material";
 import { IoIosMenu } from "react-icons/io";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { user, logOut, loading } = useAuth();
@@ -49,7 +50,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 text-black rounded-box z-30 mt-3 w-52 p-2 shadow"
           >
             <li>
               <NavLink to="/">Home</NavLink>
@@ -60,7 +61,10 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="text-xl font-semibold">
-          Volunteer
+          <div className="flex items-center gap-2">
+            <img className="w-8 h-8" src={logo}  alt="" />
+            <span>CareBridge</span>
+          </div>
         </Link>
       </div>
       <div className="flex justify-end items-center">
@@ -113,6 +117,7 @@ const Navbar = () => {
                     alignItems: "center",
                     gap: "10px",
                     padding: "10px",
+                    zIndex: "10",
                   }}
                 >
                   <p className="font-medium text-sm">{user.displayName}</p>

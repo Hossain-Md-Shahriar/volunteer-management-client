@@ -23,8 +23,8 @@ const NeedVolunteerTable = ({ allNeedVolunteer }) => {
             <tr key={needVolunteer._id}>
               <td>
                 <img
-                  className="w-40 h-24 object-cover rounded-xl"
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                  className="w-40 h-24 object-cover rounded-xl bg-gray-300"
+                  src={needVolunteer.thumbnail}
                   alt=""
                 />
               </td>

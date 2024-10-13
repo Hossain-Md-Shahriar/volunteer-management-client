@@ -4,9 +4,11 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import bgImg from "../assets/register_bg.jpg";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Register = () => {
-  const { updateUserProfile, createUser, user, setUser } = useAuth();
+  const { updateUserProfile, createUser, signInWithGoogle, user, setUser } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
