@@ -1,12 +1,26 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { FaExclamationCircle } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
 import { FaCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingState from "../components/LoadingState";
 
 const PostDetails = () => {
-  const needVolunteer = useLoaderData();
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+  const [needVolunteer, setNeedVolunteer] = useState({});
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axiosSecure.get(`/all-need-volunteer/${id}`);
+      setNeedVolunteer(data);
+      setLoading(false);
+    };
+    getData();
+  }, []);
   const {
     _id,
     thumbnail,
@@ -24,59 +38,65 @@ const PostDetails = () => {
         <FaCircle className="text-xl" />
         <h2>Post Details</h2>
       </div>
-      <div className="flex flex-col md:flex-row gap-10">
-        <div className="md:w-1/2">
-          <div className="h-full rounded-lg overflow-hidden shadow-md bg-gray-300">
-            <img
-              className="w-full h-full object-cover object-center"
-              src={thumbnail}
-              alt=""
-            />
+      {loading ? (
+        <LoadingState />
+      ) : (
+        <div className="flex flex-col md:flex-row gap-10">
+          <div className="md:w-1/2">
+            <div className="h-full rounded-lg overflow-hidden shadow-md bg-gray-300">
+              <img
+                className="w-full h-full object-cover object-center"
+                src={thumbnail}
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="md:w-1/2">
+            <p className="text-3xl font-semibold">{postTitle}</p>
+            <p className="text-lg border-b-2 border-t-2 border-dashed text-black/75 my-5 py-2">
+              {description}
+            </p>
+            <div className="flex gap-7">
+              <p className="text-primary1 font-medium bg-primary1/10 px-4 py-1 rounded-full flex items-center gap-2">
+                <BiCategory className="text-lg" /> <span>{category}</span>
+              </p>
+              <p className="text-primary1 font-medium bg-primary1/10 px-4 py-1 rounded-full flex items-center gap-2">
+                <MdOutlineLocationOn className="text-xl" />{" "}
+                <span>{location}</span>
+              </p>
+            </div>
+            <p className="my-4 font-medium">
+              No. of Volunteers Needed: {volunteersNeeded}
+            </p>
+            <p className="my-4 font-medium">
+              Deadline: {new Date(deadline).toLocaleDateString()}
+            </p>
+            <div className="border-l-4 pl-3 my-6 border-secondary2/60">
+              <h3 className="text-sm font-bold mb-1">Organizer:</h3>
+              <p className="text-sm font-semibold">Name: {organizer?.name}</p>
+              <p className="text-sm font-semibold">Email: {organizer?.email}</p>
+            </div>
+            {volunteersNeeded > 0 ? (
+              <div className="pt-3">
+                <Link
+                  to={`/be-volunteer/${_id}`}
+                  className="flex justify-center items-center gap-2 bg-primary2/85 hover:bg-primary2 transition-all text-secondary3 font-semibold py-3 px-5 rounded-md"
+                >
+                  <BsStars className="text-xl" />
+                  <span>Be a Volunteer</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3 text-lg text-orange-700 p-2 bg-orange-200/45 rounded-lg border-2 border-orange-500/20">
+                <FaExclamationCircle />
+                <span>
+                  We have reached maximum number of volunteers required
+                </span>
+              </div>
+            )}
           </div>
         </div>
-        <div className="md:w-1/2">
-          <p className="text-3xl font-semibold">{postTitle}</p>
-          <p className="text-lg border-b-2 border-t-2 border-dashed text-black/75 my-5 py-2">
-            {description}
-          </p>
-          <div className="flex gap-7">
-            <p className="text-primary1 font-medium bg-primary1/10 px-4 py-1 rounded-full flex items-center gap-2">
-              <BiCategory className="text-lg" /> <span>{category}</span>
-            </p>
-            <p className="text-primary1 font-medium bg-primary1/10 px-4 py-1 rounded-full flex items-center gap-2">
-              <MdOutlineLocationOn className="text-xl" />{" "}
-              <span>{location}</span>
-            </p>
-          </div>
-          <p className="my-4 font-medium">
-            No. of Volunteers Needed: {volunteersNeeded}
-          </p>
-          <p className="my-4 font-medium">
-            Deadline: {new Date(deadline).toLocaleDateString()}
-          </p>
-          <div className="border-l-4 pl-3 my-6 border-secondary2/60">
-            <h3 className="text-sm font-bold mb-1">Organizer:</h3>
-            <p className="text-sm font-semibold">Name: {organizer?.name}</p>
-            <p className="text-sm font-semibold">Email: {organizer?.email}</p>
-          </div>
-          {volunteersNeeded > 0 ? (
-            <div className="pt-3">
-              <Link
-                to={`/be-volunteer/${_id}`}
-                className="flex justify-center items-center gap-2 bg-primary2/85 hover:bg-primary2 transition-all text-secondary3 font-semibold py-3 px-5 rounded-md"
-              >
-                <BsStars className="text-xl" />
-                <span>Be a Volunteer</span>
-              </Link>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3 text-lg text-orange-700 p-2 bg-orange-200/45 rounded-lg border-2 border-orange-500/20">
-              <FaExclamationCircle />
-              <span>We have reached maximum number of volunteers required</span>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
